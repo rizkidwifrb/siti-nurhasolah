@@ -1,0 +1,16 @@
+import { Archive, Check, MailOpen, Trash2 } from 'lucide-react'
+import { useCallback, useEffect, useState } from 'react'
+import { ConfirmDialog } from '../../components/ConfirmDialog'
+import { EmptyState } from '../../components/EmptyState'
+import { portfolioRepository } from '../../services/portfolioRepository'
+
+export function AdminMessages() {
+  const [messages, setMessages] = useState([])
+  const [source, setSource] = useState('local')
+  const [pendingDelete, setPendingDelete] = useState(null)
+  const load = useCallback(async () => { const response = await portfolioRepository.getMessages(); setMessages(response.items); setSource(response.source) }, [])
+  useEffect(() => { void load() }, [load])
+  const updateStatus = async (id, status) => { await portfolioRepository.updateMessage(id, status); load() }
+  const remove = async () => { await portfolioRepository.deleteMessage(pendingDelete.id); setPendingDelete(null); load() }
+  return <div><p className="eyebrow">Inbox</p><h2 className="mt-2 font-display text-4xl">Contact messages</h2><p className="mt-3 max-w-2xl text-sm leading-6 text-muted">{source === 'api' ? 'Incoming messages are loaded from the portfolio database.' : 'Messages sent while the Laravel API is offline appear only in this local preview.'}</p><div className="mt-8 grid gap-4">{messages.length ? messages.map((message) => <article key={message.id} className="rounded-2xl border border-line bg-white p-5 shadow-soft"><div className="flex flex-col justify-between gap-4 sm:flex-row"><div><div className="flex flex-wrap items-center gap-3"><h3 className="font-display text-2xl">{message.name}</h3><span className="pill">{message.status || 'unread'}</span></div><p className="mt-2 text-sm text-muted">{message.email}{message.company ? ` · ${message.company}` : ''}</p><p className="mt-4 whitespace-pre-wrap text-sm leading-6 text-ink">{message.message}</p><p className="mt-3 text-xs text-muted">{message.projectType} · {message.createdAt ? new Date(message.createdAt).toLocaleString() : ''}</p></div><div className="flex h-fit gap-2"><button type="button" className="grid size-10 place-items-center rounded-xl border border-line text-burgundy hover:bg-cream" title="Mark as read" onClick={() => updateStatus(message.id, 'read')}><MailOpen size={16} /></button><button type="button" className="grid size-10 place-items-center rounded-xl border border-line text-[#47744E] hover:bg-sage/30" title="Mark as replied" onClick={() => updateStatus(message.id, 'replied')}><Check size={16} /></button><button type="button" className="grid size-10 place-items-center rounded-xl border border-line text-muted hover:bg-cream" title="Archive" onClick={() => updateStatus(message.id, 'archived')}><Archive size={16} /></button><button type="button" className="grid size-10 place-items-center rounded-xl border border-line text-[#A34E4E] hover:bg-[#FDE9E8]" title="Delete" onClick={() => setPendingDelete(message)}><Trash2 size={16} /></button></div></div></article>) : <EmptyState title="No local messages yet" description="When the production Laravel API is connected, incoming messages are stored in the database and listed here." />}</div><ConfirmDialog open={Boolean(pendingDelete)} title="Delete this message?" onCancel={() => setPendingDelete(null)} onConfirm={remove} /></div>
+}

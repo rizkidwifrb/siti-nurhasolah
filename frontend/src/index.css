@@ -1,0 +1,38 @@
+@import '@fontsource/fraunces/500.css';
+@import '@fontsource/fraunces/600.css';
+@import '@fontsource/plus-jakarta-sans/400.css';
+@import '@fontsource/plus-jakarta-sans/500.css';
+@import '@fontsource/plus-jakarta-sans/600.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { @apply min-w-[320px] bg-cream font-sans text-ink antialiased; }
+  ::selection { @apply bg-blush text-ink; }
+  a { @apply outline-none; }
+  button, input, select, textarea { font: inherit; }
+  :focus-visible { @apply outline-none ring-2 ring-burgundy ring-offset-2 ring-offset-cream; }
+}
+
+@layer components {
+  .page-shell { @apply mx-auto w-full max-w-[1320px] px-5 sm:px-8 lg:px-12; }
+  .section-space { @apply py-16 sm:py-24 lg:py-32; }
+  .eyebrow { @apply text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-burgundy; }
+  .display-title { @apply font-display text-4xl leading-[1.04] tracking-[-0.035em] text-ink sm:text-5xl lg:text-7xl; }
+  .section-title { @apply font-display text-3xl leading-tight tracking-[-0.025em] text-ink sm:text-4xl; }
+  .prose-copy { @apply text-sm leading-7 text-muted sm:text-base; }
+  .button-primary { @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-burgundy px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#68404b] focus-visible:ring-burgundy; }
+  .button-secondary { @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-[#CDB7BD] bg-white/50 px-5 py-3 text-sm font-semibold text-ink transition hover:-translate-y-0.5 hover:border-burgundy hover:bg-white; }
+  .soft-card { @apply rounded-[1.4rem] border border-line bg-white shadow-soft; }
+  .pill { @apply inline-flex min-h-7 items-center rounded-full border border-line bg-white/70 px-3 text-[0.68rem] font-medium tracking-[0.03em] text-muted; }
+  .field-label { @apply mb-2 block text-sm font-semibold text-ink; }
+  .field-input { @apply w-full rounded-2xl border border-line bg-white px-4 py-3 text-sm text-ink placeholder:text-[#A89BA0] transition focus:border-burgundy focus:ring-2 focus:ring-blush; }
+  .decor-star { clip-path: polygon(50% 0%, 59% 38%, 100% 50%, 59% 61%, 50% 100%, 41% 61%, 0% 50%, 41% 38%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
