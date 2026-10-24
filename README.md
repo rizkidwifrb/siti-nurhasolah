@@ -11,6 +11,7 @@ The public experience is an editorial React application inspired by the supplied
 - Searchable/category-filtered project collection with URL query state.
 - Verified public project: **Panggung Sekolah Bukan Tempat Luka**, linked to the provided KKN "AfterOne" 2025 YouTube short film and related coverage.
 - Contact form with client-side Zod validation, honeypot field, loading and result states.
+- Ten certificate entries with locally bundled WebP images, duplicate-aware reuse, and previews that preserve the full document.
 - Secure Laravel-source API design: validation, rate limits, sanitization, safe file validation, CORS configuration, database migrations, seeders, resources, and Sanctum-backed admin access.
 - Admin routes for dashboard, projects, experiences, certificates, and contact messages.
 - Browser-local preview fallback when the API is offline. It is marked inside the admin UI and must not be used as a production auth layer.

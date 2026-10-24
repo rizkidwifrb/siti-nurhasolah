@@ -7,6 +7,13 @@ import { SectionHeading } from '../components/SectionHeading'
 import { activityPhotos, certificateMedia, coreValues, expertise, siteProfile } from '../data/portfolioData'
 import { usePortfolio } from '../features/PortfolioContext'
 
+const formatCertificateDate = (value) => {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value || '')
+  if (!match) return value
+  const [, year, month, day] = match
+  return new Date(Number(year), Number(month) - 1, Number(day)).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+}
+
 const certificateVisual = (certificate) => {
   const media = certificateMedia[certificate.title]
   return {
@@ -150,11 +157,12 @@ export function About() {
                   const visual = certificateVisual(certificate)
                   return (
                     <article key={certificate.id} className="overflow-hidden rounded-2xl border border-line bg-cream">
-                      {visual.image && <img src={visual.image} alt={visual.alt} className="aspect-[4/3] w-full border-b border-line object-cover" loading="lazy" />}
+                      {visual.image && <img src={visual.image} alt={visual.alt} className="aspect-[4/3] w-full border-b border-line bg-white object-contain" loading="lazy" />}
                       <div className="p-4">
                         <p className="text-sm font-semibold text-ink">{certificate.title}</p>
                         {certificate.issuer && <p className="mt-2 text-xs leading-5 text-muted">{certificate.issuer}</p>}
-                        {certificate.issueDate && <p className="mt-2 text-xs font-medium text-burgundy">{certificate.issueDate}</p>}
+                        {certificate.issueDate && <p className="mt-2 text-xs font-medium text-burgundy">{formatCertificateDate(certificate.issueDate)}</p>}
+                        {certificate.detail && <p className="mt-2 text-xs leading-5 text-muted">{certificate.detail}</p>}
                       </div>
                     </article>
                   )

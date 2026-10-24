@@ -5,6 +5,7 @@ const LOCAL_KEYS = {
   projects: 'siti-portfolio-projects',
   experiences: 'siti-portfolio-experiences',
   certificates: 'siti-portfolio-certificates',
+  certificateVersion: 'siti-portfolio-certificates-version',
   messages: 'siti-portfolio-messages',
   admin: 'siti-portfolio-admin',
 }
@@ -20,6 +21,29 @@ const readLocal = (key, fallback) => {
   }
 }
 const writeLocal = (key, value) => window.localStorage.setItem(key, JSON.stringify(value))
+const CERTIFICATE_DATA_VERSION = 2
+
+const getLocalCertificates = () => {
+  const savedCertificates = readLocal(LOCAL_KEYS.certificates, seedCertificates)
+  const mergeMissingSeedCertificates = () => {
+    const titles = new Set(savedCertificates.map((item) => (item.title || '').trim().toLocaleLowerCase()))
+    return [
+      ...savedCertificates,
+      ...seedCertificates.filter((item) => !titles.has((item.title || '').trim().toLocaleLowerCase())),
+    ]
+  }
+
+  try {
+    const currentVersion = Number(window.localStorage.getItem(LOCAL_KEYS.certificateVersion) || 0)
+    if (currentVersion >= CERTIFICATE_DATA_VERSION) return savedCertificates
+    const migratedCertificates = mergeMissingSeedCertificates()
+    writeLocal(LOCAL_KEYS.certificates, migratedCertificates)
+    window.localStorage.setItem(LOCAL_KEYS.certificateVersion, String(CERTIFICATE_DATA_VERSION))
+    return migratedCertificates
+  } catch {
+    return mergeMissingSeedCertificates()
+  }
+}
 
 const normalizeCollection = (response) => response?.data?.data ?? response?.data ?? []
 
@@ -64,10 +88,22 @@ export const portfolioRepository = {
   async getCertificates() {
     try {
       const response = await api.get('/certificates')
-      return { items: normalizeCollection(response), source: 'api' }
+      const apiCertificates = normalizeCollection(response)
+      const apiTitles = new Set(apiCertificates.map((item) => (item.title || '').trim().toLocaleLowerCase()))
+      // Keep newly supplied portfolio certificates visible even when the live API
+      // still contains an older list. Existing API records take precedence by title.
+      const frontendAddedCertificates = seedCertificates.filter((item) => [
+        'English Proficiency Test (EPT)',
+        'KPID DKI Jakarta Internship',
+        'LEAD.co.id Field Reporter Internship',
+        'Sosialisasi Empat Pilar MPR RI',
+        'Ta’aruf & Wawasan Kebangsaan',
+        'Journalism Class Participant',
+      ].includes(item.title) && !apiTitles.has((item.title || '').trim().toLocaleLowerCase()))
+      return { items: [...apiCertificates, ...frontendAddedCertificates], source: 'api' }
     } catch (error) {
       if (!canUseLocalFallback(error)) throw error
-      return { items: readLocal(LOCAL_KEYS.certificates, seedCertificates), source: 'local' }
+      return { items: getLocalCertificates(), source: 'local' }
     }
   },
 
@@ -155,7 +191,8 @@ export const portfolioRepository = {
   getLocalMessages() { return readLocal(LOCAL_KEYS.messages, []) },
   setLocalMessages(messages) { writeLocal(LOCAL_KEYS.messages, messages) },
   getLocalCollection(name) {
-    const map = { experiences: [LOCAL_KEYS.experiences, seedExperiences], certificates: [LOCAL_KEYS.certificates, seedCertificates] }
+    if (name === 'certificates') return getLocalCertificates()
+    const map = { experiences: [LOCAL_KEYS.experiences, seedExperiences] }
     return readLocal(...map[name])
   },
   setLocalCollection(name, value) {

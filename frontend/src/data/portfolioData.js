@@ -6,6 +6,12 @@ import bestThesisWriterCertificate from '../assets/images/certificates/best-thes
 import himaKpiMemberCertificate from '../assets/images/certificates/hima-kpi-member.webp'
 import talaqqiBersanadCertificate from '../assets/images/certificates/talaqqi-bersanad.webp'
 import upgradingCertificate from '../assets/images/certificates/upgrading-2023.webp'
+import taarufWawasanCertificate from '../assets/images/certificates/taaruf-wawasan-kebangsaan.webp'
+import kelasJurnalistikCertificate from '../assets/images/certificates/kelas-jurnalistik.webp'
+import mprFourPillarsCertificate from '../assets/images/certificates/sosialisasi-empat-pilar-mpr-ri.webp'
+import eptCertificate from '../assets/images/certificates/english-proficiency-test-ept.webp'
+import leadInternshipCertificate from '../assets/images/certificates/lead-field-reporter-internship.webp'
+import kpidInternshipCertificate from '../assets/images/certificates/kpid-dki-jakarta-internship.webp'
 
 export const siteProfile = {
   name: 'Siti Nurhasolah',
@@ -97,13 +103,44 @@ export const certificateMedia = {
     image: talaqqiBersanadCertificate,
     alt: 'Certificate for Siti Nurhasolah’s participation in Daura Makhariijul Huruf and Talaqqi Bersanad.',
   },
+  'Ta’aruf & Wawasan Kebangsaan': {
+    image: taarufWawasanCertificate,
+    alt: 'Universitas Ibn Khaldun Bogor certificate for Ta’aruf and Wawasan Kebangsaan in the 2022/2023 academic year.',
+  },
+  'Journalism Class Participant': {
+    image: kelasJurnalistikCertificate,
+    alt: 'Certificate for Siti Nurhasolah’s participation in the Journalism Class organized by HIMA KPI at Universitas Ibn Khaldun Bogor.',
+  },
+  'Sosialisasi Empat Pilar MPR RI': {
+    image: mprFourPillarsCertificate,
+    alt: 'MPR RI certificate for participation in the Sosialisasi Empat Pilar event at Gedung DPR/MPR RI.',
+  },
+  'English Proficiency Test (EPT)': {
+    image: eptCertificate,
+    alt: 'Universitas Ibn Khaldun Bogor English Proficiency Test certificate with a total score of 450.',
+  },
+  'LEAD.co.id Field Reporter Internship': {
+    image: leadInternshipCertificate,
+    alt: 'LEAD.co.id certificate of thanks for Siti Nurhasolah’s field reporter student internship.',
+  },
+  'KPID DKI Jakarta Internship': {
+    image: kpidInternshipCertificate,
+    alt: 'Certificate confirming Siti Nurhasolah completed an internship at KPID DKI Jakarta with a good evaluation.',
+  },
 }
 
+// Three supplied photos matched existing portfolio records and are intentionally not duplicated.
 export const certificates = [
+  { id: 9, title: 'English Proficiency Test (EPT)', issuer: 'Universitas Ibn Khaldun Bogor', issueDate: '2026-04-30', detail: 'Total score: 450', credentialUrl: '', ...certificateMedia['English Proficiency Test (EPT)'] },
   { id: 2, title: 'Best Thesis Writer', issuer: 'Faculty of Islamic Studies, Universitas Ibn Khaldun Bogor', issueDate: '2026-07-25', credentialUrl: '', ...certificateMedia['Best Thesis Writer'] },
-  { id: 3, title: 'UPGRADING 2023 Participant', issuer: 'HIMA Pro-KPI', issueDate: '2023-07-27', credentialUrl: '', ...certificateMedia['UPGRADING 2023 Participant'] },
-  { id: 4, title: 'HIMA KPI Member, 2024–2025', issuer: 'HIMA KPI, Universitas Ibn Khaldun Bogor', issueDate: '', credentialUrl: '', ...certificateMedia['HIMA KPI Member, 2024–2025'] },
+  { id: 11, title: 'KPID DKI Jakarta Internship', issuer: 'Komisi Penyiaran Indonesia Daerah Provinsi DKI Jakarta', issueDate: '2025-12-18', detail: 'Internship period: October–December 2025. Evaluation: Baik.', credentialUrl: '', ...certificateMedia['KPID DKI Jakarta Internship'] },
+  { id: 4, title: 'HIMA KPI Member, 2024–2025', issuer: 'HIMA KPI, Universitas Ibn Khaldun Bogor', issueDate: '2024–2025', credentialUrl: '', ...certificateMedia['HIMA KPI Member, 2024–2025'] },
+  { id: 10, title: 'LEAD.co.id Field Reporter Internship', issuer: 'LEAD.co.id', issueDate: '14 Oct–17 Nov 2024', detail: 'Internship role: Field Reporter.', credentialUrl: '', ...certificateMedia['LEAD.co.id Field Reporter Internship'] },
+  { id: 8, title: 'Sosialisasi Empat Pilar MPR RI', issuer: 'Majelis Permusyawaratan Rakyat Republik Indonesia', issueDate: '2023-11-19', detail: 'Held at Gedung DPR/MPR RI.', credentialUrl: '', ...certificateMedia['Sosialisasi Empat Pilar MPR RI'] },
   { id: 5, title: 'Daura Makhariijul Huruf & Talaqqi Bersanad', issuer: 'Rumah Qur’an Shofia by GIM', issueDate: '2023-10-28', credentialUrl: '', ...certificateMedia['Daura Makhariijul Huruf & Talaqqi Bersanad'] },
+  { id: 3, title: 'UPGRADING 2023 Participant', issuer: 'HIMA Pro-KPI', issueDate: '2023-07-27', credentialUrl: '', ...certificateMedia['UPGRADING 2023 Participant'] },
+  { id: 6, title: 'Ta’aruf & Wawasan Kebangsaan', issuer: 'Universitas Ibn Khaldun Bogor', issueDate: '2022-09-17', detail: 'Event held on 7–8 September 2022.', credentialUrl: '', ...certificateMedia['Ta’aruf & Wawasan Kebangsaan'] },
+  { id: 7, title: 'Journalism Class Participant', issuer: 'HIMA KPI, Universitas Ibn Khaldun Bogor', issueDate: '', detail: 'Organized by the Department of Interest & Talent.', credentialUrl: '', ...certificateMedia['Journalism Class Participant'] },
 ]
 
 export const projects = [
